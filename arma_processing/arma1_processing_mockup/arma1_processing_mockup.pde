@@ -4,25 +4,33 @@
 *** fight for glory and justice.
 **/
 
+ArrayList<PVector> bullets = new ArrayList<PVector>();
 
 class Bullet {
    int bulletX;
    int bulletY;
+   PVector bvec;
+   
    Bullet(int x, int y) {
      bulletX = x;
      bulletY = y;
-   } 
-   void makeBullet() {
-      fill(0);
-      ellipse(bulletX,bulletY,10,10);
    }
-   void byebyeBullet() { //if x val and y val = chihuahua, disappear
+   
+   void drawBullet() {
+      fill(0);
+      bvec = new PVector(bulletX, bulletY);
+      bullets.add(bvec);
+      ellipse(bvec.x, bvec.y, 10, 10);
+   }
+   
+   void byebyeBullet() { // if x val and y val = chihuahua, disappear
       if (bulletX == 900 && bulletY ==450){
-        bulletX+=1000;
+        bullets.remove(bvec);
       }
    }
-   void bulletMove(bulletX) {
-       bulletX+5;
+   void bulletMove() {
+       bulletX = bulletX + 5;
+       drawBullet();
    }
 }
 
@@ -203,7 +211,8 @@ void keyPressed(){
     h = 250;
   } else if (key == 'p'){
     Bullet bullet = new Bullet(450, h+100);
-    bullet.makeBullet(); 
+    bullet.drawBullet();
+    bullet.bulletMove();
     b = b+20;
     n--;
     if (n<=0){
